@@ -17,11 +17,10 @@ apt-get autoremove -y
 apt-get autoclean
 
 ## Clean up debconf/password.dat
-
 echo PURGE | debconf-communicate mysql-server
 echo PURGE | debconf-communicate mariadb-server-10.0
 
-## remove files that install leaves laying around
+## remove files that this install leaves laying around
 rm -rf  /var/lib/mysql/wp_database
 
 ## Remove Wordpress /html directory
