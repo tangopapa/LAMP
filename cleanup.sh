@@ -6,7 +6,7 @@
 # v1.0
 #######################################
 
-# Error checking
+## Error checking
 yell() { printf "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
 try() { "$@" || die "cannot $*"; }
@@ -20,7 +20,7 @@ apt-get autoclean
 echo PURGE | debconf-communicate mysql-server
 echo PURGE | debconf-communicate mariadb-server-10.0
 
-## remove database that this install leaves behind
+## Remove database that this install leaves behind
 rm -rf  /var/lib/mysql/wp_database
 
 ## Remove Wordpress /html directory
@@ -28,7 +28,6 @@ rm -rf /var/www/html
 
 printf "\n\n"
 ps waux | grep "mysqld"
-printf "\n"
 ps waux | grep "apache"
 printf "\n\n"
 printf "All clean!\n"
