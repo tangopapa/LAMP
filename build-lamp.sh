@@ -6,13 +6,13 @@
 # v1.0
 #######################################
 
-# Error checking
+## Error checking
 yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
 try() { "$@" || die "cannot $*"; }
 
 
-# Update packages system
+## Update packages
 apt-get update  -y
 
 ## Install Apache
@@ -40,10 +40,8 @@ FLUSH PRIVILEGES;
 EOF
 
 printf "Finished Installing MariaDB\n"
-sleep 2
 
-
-# Install Wordpress
+## Install Wordpress - this times out sometimes. Just restart. Script is idempotent
 cd /opt || exit
 wget https://wordpress.org/latest.tar.gz
 tar xpf latest.tar.gz
@@ -52,10 +50,12 @@ rm -rf /var/www/html
 cp -r wordpress /var/www/html
 rm -rf wordpress
 
-# Permissions
+## Got to fix permissions on Wordpress /html directory
 chown -R www-data:www-data /var/www/html
 find /var/www/html -type d -exec chmod 755 {} \;
 find /var/www/html -type f -exec chmod 644 {} \;
 
-# Restart Apache
+# Don't forget to restart Apache
 service apache2 restart
+
+## Browse to http://localhost & configure Wordpress
