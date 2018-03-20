@@ -1,7 +1,7 @@
 # LAMP
 Unattended install of LAMP stack on Debian 9 (Stretch)
 
-To use: ./build-lamp
+To use: ./build-lamp.sh
 
 To cleanup MariaDB, Apache2, & PHP 7 after install, run: cleanup.sh
 
