@@ -20,7 +20,7 @@ apt-get autoclean
 echo PURGE | debconf-communicate mysql-server
 echo PURGE | debconf-communicate mariadb-server-10.0
 
-## remove files that this install leaves laying around
+## remove database that this install leaves behind
 rm -rf  /var/lib/mysql/wp_database
 
 ## Remove Wordpress /html directory
@@ -28,7 +28,7 @@ rm -rf /var/www/html
 
 printf "\n\n"
 ps waux | grep "mysqld"
-printf "\n\n"
+printf "\n"
 ps waux | grep "apache"
 printf "\n\n"
 printf "All clean!\n"
