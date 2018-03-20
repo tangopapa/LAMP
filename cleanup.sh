@@ -16,7 +16,7 @@ apt-get purge apache2 libapache2-mod-php7.0 php7.0 php7.0-mysql mariadb-client m
 apt-get autoremove -y
 apt-get autoclean
 
-## Clean up debconf/password.dat
+## Clean up /var/cache/debconf/passwords.dat
 echo PURGE | debconf-communicate mysql-server
 echo PURGE | debconf-communicate mariadb-server-10.0
 
