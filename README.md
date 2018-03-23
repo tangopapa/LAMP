@@ -16,5 +16,6 @@ sitting in plain text in the script.
 
 These scripts are useful as part of a process for testing Jenkins pipeline builds
 
-
+# As a docker container:
+docker run -dit -p 80:80 -p 443:443 -p 3306:3306 lamp
 
