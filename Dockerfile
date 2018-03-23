@@ -10,4 +10,4 @@ RUN chmod +x build-lamp.sh
 RUN /bin/bash ./build-lamp.sh
 
 EXPOSE 80 443 3306
-CMD ["service apache2 restart"]
+CMD ["/bin/bash"]
