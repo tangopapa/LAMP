@@ -7,7 +7,7 @@ RUN groupadd -r ${user} && useradd -r -l -M ${user} -g ${user}
 WORKDIR .
 COPY build-lamp.sh .
 RUN chmod +x build-lamp.sh
-RUN /bin/bash -c build-lamp.sh
+RUN /bin/bash ./build-lamp.sh
 
 EXPOSE 80 443 3306
 ENTRYPOINT ["/bin/bash"]
