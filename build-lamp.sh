@@ -56,6 +56,6 @@ find /var/www/html -type d -exec chmod 755 {} \;
 find /var/www/html -type f -exec chmod 644 {} \;
 
 # Don't forget to restart Apache
-service apache2 restart
+service apache2 restart >> /dev/null 2>&1 
 
 ## Browse to http://localhost & configure Wordpress
