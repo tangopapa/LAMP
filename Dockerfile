@@ -4,5 +4,9 @@ LABEL maintainer="tom@frogtownroad.com"
 ENV user=dockter-tom
 RUN groupadd -r ${user} && useradd -r -l -M ${user} -g ${user} 
 
-Run bash build-lamp.sh
+WORKDIR /opt
 
+RUN /bin/bash -c build-lamp.sh
+
+EXPOSE 80 443 3306
+ENTRYPOINT ["/bin/bash"]
