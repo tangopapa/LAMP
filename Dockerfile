@@ -1,8 +1,8 @@
 FROM debian:stretch-slim
 LABEL maintainer="tom@frogtownroad.com"
 
-ENV user=dockter-tom
-RUN groupadd -r ${user} && useradd -r -l -M ${user} -g ${user} 
+## ENV user=dockter-tom
+## RUN groupadd -r ${user} && useradd -r -l -M ${user} -g ${user} 
 
 WORKDIR .
 ## Update packages
@@ -16,8 +16,8 @@ RUN apt-get install php7.0 php7.0-mysql  -y
 
 ## Install Mysql non-interactively
 RUN export DEBIAN_FRONTEND="noninteractive"                                                                  && \
-debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server/root_password password krumpli6'              && \
-debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server/root_password_again password krumpli6'        && \
+echo mariadb-server-10.0 mariadb-server/root_password password tmpsetup | debconf-set-selections             && \
+echo mariadb-server-10.0 mariadb-server/root_password_again password tmpsetup | debconf-set-selections       && \
 apt-get install mariadb-client mariadb-server -y
 
 RUN service mysql restart 
