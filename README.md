@@ -1,4 +1,4 @@
-# This repo contains files that enable a LAMP stack to be built non-interactively
+# Enable a LAMP stack to be built & configured non-interactively
 
 The first method, LAMP-SH, is an unattended install & config from the command line.
 The second method, DOCKER-LAMP, instantiates & configures a docker container with a functional LAMP stack
