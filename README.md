@@ -1,4 +1,9 @@
-# LAMP
+# This repo contains files that enable a LAMP stack to be built non-interactively
+
+The first method, LAMP-SH, is an unattended install & config from the command line.
+The second method, DOCKER-LAMP, instantiates & configures a docker container with a functional LAMP stack
+
+# LAMP-SH
 Unattended install of LAMP stack on Debian 9 (Stretch)
 
 To use: ./build-lamp.sh
@@ -14,8 +19,8 @@ Browse to http://localhost & you'll be presented with the Wordpress 5 min instal
 NOTE: This script is only for testing since the Wordpress user, password, & database are all
 sitting in plain text in the script.  
 
-These scripts are useful as part of a process for testing Jenkins pipeline builds
+These files are useful as part of a process for testing Jenkins pipeline builds
 
-# As a docker container:
+# DOCKER-LAMP:
 docker run -dit -p 80:80 -p 443:443 -p 3306:3306 lamp
 
