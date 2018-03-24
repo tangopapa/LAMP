@@ -5,20 +5,35 @@ ENV user=dockter-tom
 RUN groupadd -r ${user} && useradd -r -l -M ${user} -g ${user} 
 
 WORKDIR .
-COPY build-lamp.sh .
-RUN chmod +x build-lamp.sh
-RUN /bin/bash ./build-lamp.sh
+## Update packages
+RUN apt-get update  -y
 
-RUN service mysql start
+## Install Apache
+RUN apt-get install apache2 libapache2-mod-php7.0 -y
 
-RUN mysql -u root  <<EOF \
-DROP USER IF EXISTS wp_user; \
-CREATE USER 'wp_user' IDENTIFIED BY 'wp_password'; \
-DROP DATABASE IF EXISTS wp_database; \
-CREATE DATABASE wp_database; \
-GRANT ALL ON wp_database.* TO 'wp_user'; \
-FLUSH PRIVILEGES; \
-EOF
+## Install PHP
+RUN apt-get install php7.0 php7.0-mysql  -y
+
+## Install Mysql non-interactively
+RUN export DEBIAN_FRONTEND="noninteractive"                                                                  && \
+debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server/root_password password krumpli6'              && \
+debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server/root_password_again password krumpli6'        && \
+apt-get install mariadb-client mariadb-server -y
+
+RUN service mysql restart 
+ARG mysql_pid=$!
+RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done               && \
+    mysql -uroot -e "DROP USER IF EXISTS wp_user;"  1                                   && \
+    mysql -uroot -e "CREATE USER 'wp_user' IDENTIFIED BY 'wp_password';"                && \
+    mysql -uroot -e "DROP DATABASE IF EXISTS wp_database;"                              && \
+    mysql -uroot -e "CREATE DATABASE wp_database;"                                      && \
+    mysql -uroot -e "GRANT ALL ON wp_database.* TO 'wp_user';"                          && \
+    mysql -uroot -e "FLUSH PRIVILEGES;"                                                 && \
+    mysql -uroot -e "exit;"                                                             && \
+    mysqladmin shutdown                                                                 && \
+    wait $mysql_pid                                                                     && \
+    service mysql restart
+
 
 ## Install Wordpress - this times out sometimes. Just restart. Script is idempotent
 RUN apt-get install wget -y                     && \
@@ -29,7 +44,7 @@ rm -rf /var/www/html                            && \
 cp -r wordpress /var/www/html                   && \
 rm -rf wordpress
 
-## Got to fix permissions on Wordpress /html directory
+## Got to fix permissions on Wordpress /html directory & restart Apache2
 RUN chown -R www-data:www-data /var/www/html        && \
 find /var/www/html -type d -exec chmod 755 {} \;    && \
 find /var/www/html -type f -exec chmod 644 {} \;    && \

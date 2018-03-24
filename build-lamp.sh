@@ -25,8 +25,8 @@ printf "Finished Installing PHP\n"
 
 ## Install Mysql non-interactively
 export DEBIAN_FRONTEND="noninteractive"
-sudo debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server/root_password password krumpli6'
-sudo debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server/root_password_again password krumpli6'
+debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server/root_password password krumpli6'
+debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server/root_password_again password krumpli6'
 apt-get install mariadb-client mariadb-server -y
 
 ## Setup WP database
