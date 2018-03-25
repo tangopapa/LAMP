@@ -29,9 +29,9 @@ RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done       
     mysql -uroot -e "CREATE DATABASE wp_database;"                                      && \
     mysql -uroot -e "GRANT ALL ON wp_database.* TO 'wp_user';"                          && \
     mysql -uroot -e "FLUSH PRIVILEGES;"                                                 && \
-    mysql -uroot -e "exit;"                                                             && \
+##  mysql -uroot -e "exit;"                                                             && \
     mysqladmin shutdown                                                                 && \
-    wait $mysql_pid                                                                     && \
+    wait $mysql_pid                                                                    
 ##    service mysql restart
 
 
