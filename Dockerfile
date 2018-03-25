@@ -41,8 +41,8 @@ wget https://wordpress.org/latest.tar.gz        && \
 tar xpf latest.tar.gz                           && \
 rm -rf latest.tar.gz                            && \
 rm -rf /var/www/html                            && \
-cp -r wordpress /var/www/html                   && \
-rm -rf ./wordpress
+cp -r wordpress /var/www/html                   
+## rm -rf ./wordpress
 
 ## Got to fix permissions on Wordpress /html directory & restart Apache2
 RUN chown -R www-data:www-data /var/www/html        && \
