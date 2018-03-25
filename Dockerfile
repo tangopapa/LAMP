@@ -9,10 +9,12 @@ WORKDIR .
 RUN apt-get update  -y
 
 ## Install Apache
-RUN apt-get install apache2 libapache2-mod-php7.0 -y
+RUN apt-get install apache2 libapache2-mod-php7.0 wget  -y
 
 ## Install PHP
 RUN apt-get install php7.0 php7.0-mysql  -y
+
+## Install wget - moved to PHP
 
 ## Install Mysql non-interactively
 RUN export DEBIAN_FRONTEND="noninteractive"                                                                  && \
@@ -28,7 +30,7 @@ RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done       
     mysql -uroot -e "DROP DATABASE IF EXISTS wp_database;"                              && \
     mysql -uroot -e "CREATE DATABASE wp_database;"                                      && \
     mysql -uroot -e "GRANT ALL ON wp_database.* TO 'wp_user';"                          && \
-    mysql -uroot -e "FLUSH PRIVILEGES;"                                                 && \
+    mysql -uroot -e "FLUSH PRIVILEGES;"                                                 
 
 ##    mysqladmin shutdown                                                                
 ##    wait $mysql_pid                                                                    
@@ -36,7 +38,7 @@ RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done       
 
 
 ## Install Wordpress - this times out sometimes. Just restart. Script is idempotent
-RUN apt-get install wget -y                    
+                  
 RUN wget https://wordpress.org/latest.tar.gz    && \
 tar xpf latest.tar.gz                           && \
 rm -rf latest.tar.gz                            && \
