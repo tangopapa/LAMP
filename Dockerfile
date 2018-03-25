@@ -36,8 +36,8 @@ RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done       
 
 
 ## Install Wordpress - this times out sometimes. Just restart. Script is idempotent
-RUN apt-get install wget -y                     && \
-wget https://wordpress.org/latest.tar.gz        && \
+RUN apt-get install wget -y                    
+RUN wget https://wordpress.org/latest.tar.gz    && \
 tar xpf latest.tar.gz                           && \
 rm -rf latest.tar.gz                            && \
 rm -rf /var/www/html                            && \
