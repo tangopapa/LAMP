@@ -23,7 +23,7 @@ apt-get install mariadb-client mariadb-server -y
 RUN service mysql restart 
 ARG mysql_pid=$!
 RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done               && \
-    mysql -uroot -e "DROP USER IF EXISTS wp_user;"  1                                   && \
+    mysql -uroot -e "DROP USER IF EXISTS wp_user;"                                      && \
     mysql -uroot -e "CREATE USER 'wp_user' IDENTIFIED BY 'wp_password';"                && \
     mysql -uroot -e "DROP DATABASE IF EXISTS wp_database;"                              && \
     mysql -uroot -e "CREATE DATABASE wp_database;"                                      && \
