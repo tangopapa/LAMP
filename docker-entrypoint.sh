@@ -16,4 +16,8 @@ if [ $status -ne 0 ]; then
   exit $status
 fi
 
+# Start mysqld to config it
+  mysqld_safe --skip-networking --nowatch
+  mysql_options='--protocol=socket -uroot'
+
 exec "$@"

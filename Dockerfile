@@ -50,15 +50,16 @@ RUN chown -R www-data:www-data /var/www/html        && \
 find /var/www/html -type d -exec chmod 755 {} \;    && \
 find /var/www/html -type f -exec chmod 644 {} \;    
 
-
-
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
+COPY mariadb-start /usr/bin/mariadb-start
+RUN chmod +x /usr/bin/mariadb-start
+
 EXPOSE 80 443 3306
-CMD ["service mysql start"]
+CMD ["/usr/bin/mariadb-start"]
 
 
 
