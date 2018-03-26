@@ -52,7 +52,7 @@ find /var/www/html -type f -exec chmod 644 {} \;
 
 COPY start-apache.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start-apache.sh         
-RUN ./start-apache.sh
+RUN /usr/local/bin/start-apache.sh
 
 EXPOSE 80 443 3306
 CMD ["mysqld_safe"]
