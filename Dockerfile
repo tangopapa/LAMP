@@ -53,10 +53,10 @@ find /var/www/html -type f -exec chmod 644 {} \;
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["docker-entrypoint.sh"]
-
-COPY mariadb-start /usr/bin/mariadb-start
+ADD mariadb-start /usr/bin/mariadb-start
 RUN chmod +x /usr/bin/mariadb-start
+
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 80 443 3306
 CMD ["/usr/bin/mariadb-start"]
