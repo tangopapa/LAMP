@@ -50,16 +50,12 @@ RUN chown -R www-data:www-data /var/www/html        && \
 find /var/www/html -type d -exec chmod 755 {} \;    && \
 find /var/www/html -type f -exec chmod 644 {} \;    
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-COPY /usr/sbin/mysqld /usr/sbin/mysqld
-RUN chmod +x /usr/sbin/mysqld
-
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY start-apache.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start-apache.sh         && \
+bash start-apache.sh
 
 EXPOSE 80 443 3306
-CMD ["/usr/sbin/mysqld, start"]
+CMD ["mysqld_safe"]
 
 
 
