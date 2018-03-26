@@ -53,10 +53,10 @@ find /var/www/html -type f -exec chmod 644 {} \;
 
 
 
-COPY start-services.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/start-services.sh
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["start-services.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 80 443 3306
 CMD ["mysqld"]
