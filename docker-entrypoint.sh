@@ -9,9 +9,10 @@ try() { "$@" || die "cannot $*"; }
 
 
 # Start Apache
-/usr/sbin/apachectl -DFOREGROUND -k start > /dev/null 2>&1
+/usr/sbin/apachectl -DFOREGROUND -k start &
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start Apache2 service: $status"
   exit $status
 fi
+exec "$@"
