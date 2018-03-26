@@ -51,11 +51,15 @@ RUN chown -R www-data:www-data /var/www/html        && \
 find /var/www/html -type d -exec chmod 755 {} \;    && \
 find /var/www/html -type f -exec chmod 644 {} \;    
 
-EXPOSE 80 443 3306
 
-COPY start-services.sh start-services.sh
-RUN chmod +x start-services.sh
-CMD ./start-services.sh
+
+COPY start-services.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start-services.sh
+
+ENTRYPOINT ["start-services.sh"]
+
+EXPOSE 80 443 3306
+CMD ["mysqld"]
 
 
 
