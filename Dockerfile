@@ -51,8 +51,12 @@ RUN chown -R www-data:www-data /var/www/html        && \
 find /var/www/html -type d -exec chmod 755 {} \;    && \
 find /var/www/html -type f -exec chmod 644 {} \;    
 
-RUN service apache2 start
-RUN service mysql start
-
 EXPOSE 80 443 3306
-CMD ["/bin/bash"]
+
+COPY start-services.sh start-services.sh
+RUN chmod +x start-services.sh
+CMD ./start-services.sh
+
+
+
+
