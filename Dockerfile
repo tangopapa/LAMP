@@ -22,8 +22,7 @@ echo mariadb-server-10.0 mariadb-server/root_password password tmpsetup | debcon
 echo mariadb-server-10.0 mariadb-server/root_password_again password tmpsetup | debconf-set-selections       && \
 apt-get install mariadb-client mariadb-server -y
 
-RUN service mysql restart 
-## ARG mysql_pid=$!
+
 RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done               && \
     mysql -uroot -e "DROP USER IF EXISTS wp_user;"                                      && \
     mysql -uroot -e "CREATE USER 'wp_user' IDENTIFIED BY 'wp_password';"                && \
@@ -59,7 +58,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 80 443 3306
-CMD ["mysqld"]
+CMD ["exec /usr/bin/mysqld_safe"]
 
 
 
