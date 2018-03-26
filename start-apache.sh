@@ -15,3 +15,4 @@ if [ $status -ne 0 ]; then
   echo "Failed to start Apache2 service: $status"
   exit $status
 fi
+
