@@ -69,4 +69,3 @@ echo "apache stopped"
 else
 service apache2 stop
 fi
-
