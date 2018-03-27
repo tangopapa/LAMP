@@ -57,20 +57,8 @@ ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/d
 
 ## Restart Apache to apply changes
 if [[ -z $(pgrep apache2) ]]; then   ## apache2 is stopped
-
-/usr/sbin/apachectl -DFOREGROUND -k start > /dev/null 2>&1
-status=$?
-    if [ $status -ne 0 ]; then
-        echo "Failed to start Apache2 service: $status"
-        exit $status
-    fi
+echo "apache stopped"
 else
-/usr/sbin/apachectl -DFOREGROUND -k restart > /dev/null 2>&1
-status=$?
-    if [ $status -ne 0 ]; then
-        echo "Failed to start Apache2 service: $status"
-        exit $status
-    fi
+service apache stopped
 fi
 
-exec "$@"
