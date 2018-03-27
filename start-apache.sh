@@ -20,11 +20,6 @@ openssl req \
     -out www.$SITE.com.cert
 }
 
-## Check to see if apache2 has started; if not, start it
-if [[ -z $(pgrep apache2) ]]; then 
-service apache2 start
-fi
-
 ## Make sure we have lastest openssl - no heartbleed please
 apt-get upgrade openssl
 
@@ -35,7 +30,12 @@ a2enmod ssl
 a2ensite default-ssl
 
 ## Restart Apache to effect these changes
-service apache2 reload
+## Check to see if apache2 has started; if not, start it
+if [[ -z $(pgrep apache2) ]]; then 
+    service apache2 start
+else
+    service apache2 reload
+fi
 
 ## Create a new directory where we can store the private key and certificate
 mkdir -p /etc/apache2/ssl

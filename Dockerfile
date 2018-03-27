@@ -15,7 +15,8 @@ RUN apt-get install apache2 libapache2-mod-php7.0 wget  -y
 RUN apt-get install php7.0 php7.0-mysql  -y
 
 COPY start-apache.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/start-apache.sh && /usr/local/bin/start-apache.sh
+RUN chmod +x /usr/local/bin/start-apache.sh 
+RUN /usr/local/bin/start-apache.sh
 
 ## Install wget - moved to PHP
 
