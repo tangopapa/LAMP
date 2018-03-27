@@ -26,6 +26,14 @@ apt-get upgrade openssl
 ## Enable SSL module
 a2enmod ssl
 
+## Restart Apache to effect these changes
+## Check to see if apache2 has started; if not, start it
+if [[ -z $(pgrep apache2) ]]; then 
+    service apache2 start
+else
+    service apache2 restart
+fi
+
 ## Apache has an SSL template; let's use that
 a2ensite default-ssl
 
@@ -34,7 +42,7 @@ a2ensite default-ssl
 if [[ -z $(pgrep apache2) ]]; then 
     service apache2 start
 else
-    service apache2 restart
+    service apache2 reload
 fi
 
 ## Create a new directory where we can store the private key and certificate
@@ -59,6 +67,6 @@ ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/d
 if [[ -z $(pgrep apache2) ]]; then   ## apache2 is stopped
 echo "apache stopped"
 else
-service apache stopped
+service apache stop
 fi
 
