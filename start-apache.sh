@@ -63,11 +63,4 @@ rm -rf /etc/apache2/sites-available/default-ssl.conf
 fi
 ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
-## exec /usr/sbin/apachectl -DFOREGROUND -k start
-## Restart Apache to effect these changes
-## Check to see if apache2 has started; if not, start it
-if [[ -z $(pgrep apache2) ]]; then 
-    service apache2 start
-else
-    service apache2 reload
-fi
+/usr/sbin/apachectl -DFOREGROUND -k start
