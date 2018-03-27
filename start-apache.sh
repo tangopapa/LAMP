@@ -50,7 +50,6 @@ mkdir -p /etc/apache2/ssl
 cd /etc/apache2/ssl
 make_cert
 chmod 600 /etc/apache2/ssl/*
-cd /opt
 
 ## Modify default-ssl.conf
 sed -i.bak "/^\s*ServerAdmin\s*webmaster@localhost/a\ServerName ${SITE}.com:443" /etc/apache2/sites-enabled/default-ssl.conf
@@ -68,6 +67,6 @@ ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/d
 if [[ -z $(pgrep apache2) ]]; then   ## apache2 is stopped
 echo "apache stopped"
 else
-service apache stop
+service apache2 stop
 fi
 
