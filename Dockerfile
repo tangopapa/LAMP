@@ -14,10 +14,6 @@ RUN apt-get install apache2 libapache2-mod-php7.0 wget  -y
 ## Install PHP
 RUN apt-get install php7.0 php7.0-mysql  -y
 
-COPY start-apache.sh /opt/
-RUN chmod +x /opt/start-apache.sh 
-RUN /opt/start-apache.sh
-
 ## Install wget - moved to PHP
 
 ## Install Mysql non-interactively
@@ -33,21 +29,23 @@ RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done       
     mysql -uroot -e "DROP DATABASE IF EXISTS wp_database;"                              && \
     mysql -uroot -e "CREATE DATABASE wp_database;"                                      && \
     mysql -uroot -e "GRANT ALL ON wp_database.* TO 'wp_user';"                          && \
-    mysql -uroot -e "FLUSH PRIVILEGES;"                                                 
-
-##    mysqladmin shutdown                                                                
-##    wait $mysql_pid                                                                    
-##    service mysql restart
+    mysql -uroot -e "FLUSH PRIVILEGES;"      
 
 
 ## Install Wordpress - this times out sometimes. Just restart. Script is idempotent
-                  
 RUN wget https://wordpress.org/latest.tar.gz    && \
 tar xpf latest.tar.gz                           && \
 rm -rf latest.tar.gz                            && \
 rm -rf /var/www/html                            && \
 cp -r wordpress /var/www/html                   
-## rm -rf ./wordpress
+
+
+## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
+## Configure apache2: This script generates a cert & starts httpd daemon
+COPY start-apache.sh /opt/
+RUN chmod +x /opt/start-apache.sh 
+RUN /opt/start-apache.sh
+
 
 ## Got to fix permissions on Wordpress /html directory & restart Apache2
 RUN chown -R www-data:www-data /var/www/html        && \
