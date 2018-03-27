@@ -60,7 +60,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
  
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD ["/usr/sbin/apachectl -DFOREGROUND -k start > /dev/null 2>&1"]
+CMD [/bin/bash]
 
 EXPOSE 80 443 3306
 
