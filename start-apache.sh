@@ -34,7 +34,7 @@ a2ensite default-ssl
 if [[ -z $(pgrep apache2) ]]; then 
     service apache2 start
 else
-    service apache2 reload
+    service apache2 restart
 fi
 
 ## Create a new directory where we can store the private key and certificate
