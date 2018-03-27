@@ -58,7 +58,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
  
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD [["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+CMD ["/bin/bash"]
 
 EXPOSE 80 443 3306
 
