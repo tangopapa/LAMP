@@ -58,7 +58,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
  
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD [/bin/bash]
+CMD ["mysqld_safe --bind-address=0.0.0.0"]
 
 EXPOSE 80 443 3306
 
