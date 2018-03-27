@@ -10,7 +10,6 @@ RUN apt-get update  -y
 
 ## Install Apache
 RUN apt-get install apache2 libapache2-mod-php7.0 wget  -y
-RUN service Apache2 start
 
 ## Install PHP
 RUN apt-get install php7.0 php7.0-mysql  -y
