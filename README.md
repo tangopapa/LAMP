@@ -23,5 +23,5 @@ sitting in plain text in the script.
 These files are useful as part of a process for testing Jenkins pipeline builds
 
 # DOCKER-LAMP:
-docker run -dit -p 80:80 -p 443:443 -p 3306:3306 lamp
+docker run -dit -p 22:22 -p 80:80 -p 443:443 -p 3306:3306 lamp
 
