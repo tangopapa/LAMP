@@ -28,5 +28,5 @@ docker run -dit -p 22:22 -p 80:80 -p 443:443 -p 3306:3306 lamp
 This creates a target container that contains common applications,
 configured & listening on open ports 22, 80, 443, & 3306.
 
-Used for testing for security scanning in sidecar pattern.
+Useful for testing DAST security scanning in sidecar pattern.
 
