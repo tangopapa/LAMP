@@ -1,3 +1,10 @@
 */temp*
 */*/temp*
 temp?
+.git 
+.gitignore 
+LICENSE VERSION 
+README.md 
+Changelog.md 
+build-lamp.sh
+cleanup.sh
