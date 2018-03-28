@@ -4,7 +4,7 @@ LABEL maintainer="tom@frogtownroad.com"
 ## ENV user=dockter-tom
 ## RUN groupadd -r ${user} && useradd -r -l -M ${user} -g ${user} 
 
-WORKDIR .
+## WORKDIR .
 ## Update packages
 RUN apt-get update  -y
 
@@ -50,8 +50,8 @@ ADD supervisord.conf /opt/supervisord.conf
 
 ## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
 ## Configure apache2: This script generates a cert for https
-COPY start.sh /opt/start.sh
-RUN chmod +x /opt/start.sh 
+COPY start.sh start.sh
+RUN chmod +x start.sh 
 
 ## Got to fix permissions on Wordpress /html directory & restart Apache2
 RUN chown -R www-data:www-data /var/www/html        && \
@@ -64,7 +64,7 @@ find /var/www/html -type f -exec chmod 644 {} \;
  
 ## ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD [""/bin/bash", "/opt/start.sh""]
+CMD [""/bin/bash", "start.sh""]
 
 EXPOSE 22 80 443 3306
 
