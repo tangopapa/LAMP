@@ -8,13 +8,19 @@ WORKDIR .
 ## Update packages
 RUN apt-get update  -y
 
+## Install sup packages
+RUN apt-get install wget supervisor ssh -y
+
 ## Install Apache
-RUN apt-get install apache2 libapache2-mod-php7.0 wget  -y
+RUN apt-get install apache2 libapache2-mod-php7.0 -y
 
 ## Install PHP
 RUN apt-get install php7.0 php7.0-mysql  -y
 
 ## Install wget - moved to PHP
+
+## Let the conatiner know that there is no tty
+ENV DEBIAN_FRONTEND noninteractive
 
 ## Install Mysql non-interactively
 RUN export DEBIAN_FRONTEND="noninteractive"                                                                  && \
@@ -39,13 +45,13 @@ rm -rf latest.tar.gz                            && \
 rm -rf /var/www/html                            && \
 cp -r wordpress /var/www/html                   
 
+## Add supervisord to properly startup the two executables, apache2 & mysqld
+ADD supervisord.conf /opt/supervisord.conf
 
 ## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
-## Configure apache2: This script generates a cert & starts httpd daemon
-COPY start-apache.sh /opt/
-RUN chmod +x /opt/start-apache.sh 
-RUN /opt/start-apache.sh
-
+## Configure apache2: This script generates a cert for https
+COPY start.sh /opt/start.sh
+RUN chmod +x /opt/start.sh 
 
 ## Got to fix permissions on Wordpress /html directory & restart Apache2
 RUN chown -R www-data:www-data /var/www/html        && \
@@ -53,14 +59,14 @@ find /var/www/html -type d -exec chmod 755 {} \;    && \
 find /var/www/html -type f -exec chmod 644 {} \;    
 
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+## COPY docker-entrypoint.sh /usr/local/bin/
+## RUN chmod +x /usr/local/bin/docker-entrypoint.sh
  
-ENTRYPOINT ["docker-entrypoint.sh"]
+## ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD [""/bin/bash", "/start.sh""]
 
-EXPOSE 80 443 3306
+EXPOSE 22 80 443 3306
 
 
 
