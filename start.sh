@@ -63,5 +63,5 @@ rm -rf /etc/apache2/sites-available/default-ssl.conf
 fi
 ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
-mysqld_safe --bind-address=0.0.0.0 
+mysqld_safe --bind-address=0.0.0.0  &
 /usr/sbin/apachectl -DFOREGROUND -k start
