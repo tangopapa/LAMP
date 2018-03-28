@@ -63,5 +63,4 @@ rm -rf /etc/apache2/sites-available/default-ssl.conf
 fi
 ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
-service mysql start  &
 /usr/sbin/apachectl -DFOREGROUND -k start
