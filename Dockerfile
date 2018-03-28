@@ -64,7 +64,7 @@ find /var/www/html -type f -exec chmod 644 {} \;
  
 ## ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD [""/bin/bash", "/start.sh""]
+CMD [""/bin/bash", "/opt/start.sh""]
 
 EXPOSE 22 80 443 3306
 
