@@ -29,7 +29,7 @@ RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done       
     mysql -uroot -e "DROP DATABASE IF EXISTS wp_database;"                              && \
     mysql -uroot -e "CREATE DATABASE wp_database;"                                      && \
     mysql -uroot -e "GRANT ALL ON wp_database.* TO 'wp_user';"                          && \
-    mysql -uroot -e "FLUSH PRIVILEGES;"      
+    mysql -uroot -e "FLUSH PRIVILEGES;"                                                 
 
 
 ## Install Wordpress - this times out sometimes. Just restart. Script is idempotent
@@ -56,9 +56,9 @@ find /var/www/html -type f -exec chmod 644 {} \;
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
  
-ENTRYPOINT ["docker-entrypoint.sh"]
+## ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD ["mysqld_safe --bind-address=0.0.0.0 && /usr/sbin/apachectl -DFOREGROUND -k start"]
+CMD [""/bin/bash", "/start.sh""]
 
 EXPOSE 80 443 3306
 
