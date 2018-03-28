@@ -20,7 +20,7 @@ openssl req \
     -out www.$SITE.com.cert
 }
 
-## Make sure we have lastest openssl - no heartbleed please
+## Make sure we have latest openssl - no heartbleed please
 apt-get upgrade openssl
 
 ## Enable SSL module

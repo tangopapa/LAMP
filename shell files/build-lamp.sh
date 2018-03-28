@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eo pipefail
+
 #######################################
 # Bash script to non-interactively install a LAMP stack + Wordpress. Tested on Debian Stretch.
 # Tom Porter
