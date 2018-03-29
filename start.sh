@@ -34,7 +34,6 @@ else
     service apache2 restart
 fi
 
-
 ## Apache has an SSL template; let's use that
 a2ensite default-ssl
 
@@ -64,4 +63,4 @@ rm -rf /etc/apache2/sites-available/default-ssl.conf
 fi
 ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
-exec /usr/bin/supervisord -c /opt/supervisord.conf
+/usr/bin/supervisord -c /opt/supervisord.conf
