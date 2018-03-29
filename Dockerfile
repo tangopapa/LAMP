@@ -61,7 +61,7 @@ find /var/www/html -type f -exec chmod 644 {} \;
  
 ## ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD ["/usr/bin/supervisord -c", "supervisord.conf"]
+CMD ["/usr/bin/supervisord -c"]
 
 EXPOSE 22 80 443 3306
 
