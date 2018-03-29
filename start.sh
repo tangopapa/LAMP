@@ -64,5 +64,6 @@ fi
 ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
 /usr/bin/supervisord -c /opt/supervisord.conf
+echo "starting supervisor..."
 
 exec "$@"
