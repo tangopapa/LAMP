@@ -4,7 +4,6 @@ LABEL maintainer="tom@frogtownroad.com"
 ## ENV user=dockter-tom
 ## RUN groupadd -r ${user} && useradd -r -l -M ${user} -g ${user} 
 
-## WORKDIR .
 ## Update packages
 RUN apt-get update  -y
 
@@ -45,8 +44,8 @@ rm -rf latest.tar.gz                            && \
 rm -rf /var/www/html                            && \
 cp -r wordpress /var/www/html                   
 
-## Add supervisord to properly startup the two executables, apache2 & mysqld
-ADD supervisord.conf /opt/supervisord.conf
+## Add supervisord to properly startup the 3 executables - ssh, apache2. mysqld
+COPY supervisord.conf supervisord.conf
 
 ## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
 ## Configure apache2: This script generates a cert for https
@@ -64,7 +63,7 @@ find /var/www/html -type f -exec chmod 644 {} \;
  
 ## ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD ["start.sh"]
+CMD [""/bin/bash","start.sh""]
 
 EXPOSE 22 80 443 3306
 
