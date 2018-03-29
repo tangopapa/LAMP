@@ -66,6 +66,6 @@ ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/d
 /usr/bin/supervisord -c /opt/supervisord.conf
 echo "starting supervisor..."
 
-while true; do sleep 1; done
+## while true; do sleep 1; done
 
-## exec "$@"
+exec "$@"
