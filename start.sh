@@ -63,7 +63,7 @@ rm -rf /etc/apache2/sites-available/default-ssl.conf
 fi
 ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
-/usr/bin/supervisord -c supervisord.conf
+/usr/bin/supervisord -n
 echo "starting supervisor..."
 
 ## while true; do sleep 1; done

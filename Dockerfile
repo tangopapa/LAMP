@@ -52,7 +52,7 @@ COPY start.sh start.sh
 RUN chmod +x start.sh && ./start.sh
 
 ## Add supervisord to properly startup the 3 executables - ssh, apache2. mysqld
-COPY supervisord.conf supervisord.conf
+ADD supervisord.conf /etc/supervisor/supervisord.conf
 
 ## Got to fix permissions on Wordpress /html directory & restart Apache2
 RUN chown -R www-data:www-data /var/www/html        && \
