@@ -49,7 +49,7 @@ cp -r wordpress /var/www/html
 ## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
 ## Configure apache2: This script generates a cert for https
 COPY start.sh start.sh
-RUN chmod +x start.sh 
+RUN chmod +x start.sh && ./start.sh
 
 ## Add supervisord to properly startup the 3 executables - ssh, apache2. mysqld
 COPY supervisord.conf supervisord.conf
