@@ -7,8 +7,9 @@ LABEL maintainer="tom@frogtownroad.com"
 ## Update packages
 RUN apt-get update  -y
 
-## Install sup packages
-RUN apt-get install wget supervisor ssh -y
+## Install supplementary packages
+RUN apt-get install wget supervisor ssh -y  && \
+mkdir -p /var/log/supervisor
 
 ## Install Apache
 RUN apt-get install apache2 libapache2-mod-php7.0 -y
@@ -44,26 +45,23 @@ rm -rf latest.tar.gz                            && \
 rm -rf /var/www/html                            && \
 cp -r wordpress /var/www/html                   
 
-## Add supervisord to properly startup the 3 executables - ssh, apache2. mysqld
-COPY supervisord.conf supervisord.conf
 
 ## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
 ## Configure apache2: This script generates a cert for https
 COPY start.sh start.sh
 RUN chmod +x start.sh 
 
+## Add supervisord to properly startup the 3 executables - ssh, apache2. mysqld
+COPY supervisord.conf supervisord.conf
+
 ## Got to fix permissions on Wordpress /html directory & restart Apache2
 RUN chown -R www-data:www-data /var/www/html        && \
 find /var/www/html -type d -exec chmod 755 {} \;    && \
 find /var/www/html -type f -exec chmod 644 {} \;    
-
-
-## COPY docker-entrypoint.sh /usr/local/bin/
-## RUN chmod +x /usr/local/bin/docker-entrypoint.sh
  
 ## ENTRYPOINT ["docker-entrypoint.sh"]
 
-CMD ["./start.sh"]
+CMD ["/usr/bin/supervisord -c", "supervisord.conf"]
 
 EXPOSE 22 80 443 3306
 
