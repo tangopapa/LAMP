@@ -54,6 +54,10 @@ chmod 600 /etc/apache2/ssl/*
 ## Create directories sshd requires
 mkdir -p /run/sshd
 
+## Modify sshd.config banner greeting
+sed -i.bak "/^#Banner none/c\Banner *** WELCOME TO DOCKTER-TOM ***" /etc/ssh/sshd.config
+rm -rf *bak
+
 ## Modify default-ssl.conf
 sed -i.bak "/^\s*ServerAdmin\s*webmaster@localhost/a\ServerName ${SITE}.com:443" /etc/apache2/sites-enabled/default-ssl.conf
 sed -i.bak "/^\s*SSLCertificateFile/c\SSLCertificateFile /etc/apache2/ssl/www.$SITE.com.cert"  /etc/apache2/sites-enabled/default-ssl.conf

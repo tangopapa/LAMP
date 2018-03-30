@@ -7,7 +7,7 @@ LABEL maintainer="tom@frogtownroad.com"
 ## Update packages
 RUN apt-get update  -y
 
-## Install supplementary packages
+## Install supplementary packages --no-install-recommends
 RUN apt-get install wget supervisor openssh-server -y  && \
 mkdir -p /var/log/supervisor
 
