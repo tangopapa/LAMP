@@ -8,7 +8,7 @@ LABEL maintainer="tom@frogtownroad.com"
 RUN apt-get update  -y
 
 ## Install supplementary packages
-RUN apt-get install wget supervisor ssh -y  && \
+RUN apt-get install wget supervisor openssh-server -y  && \
 mkdir -p /var/log/supervisor
 
 ## Install Apache
