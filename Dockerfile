@@ -31,6 +31,8 @@ apt-get install mariadb-client mariadb-server -y
 
 RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done               && \
     mysql -uroot -e "DROP USER IF EXISTS wp_user;"                                      && \
+## Let's add a root user with no password
+    mysql -uroot -e "CREATE USER 'root' IDENTIFIED BY '';"                              && \
     mysql -uroot -e "CREATE USER 'wp_user' IDENTIFIED BY 'wp_password';"                && \
     mysql -uroot -e "DROP DATABASE IF EXISTS wp_database;"                              && \
     mysql -uroot -e "CREATE DATABASE wp_database;"                                      && \
@@ -56,10 +58,10 @@ COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./supervisord.conf /etc/supervisor/supervisord.conf
 COPY ./supervisord.conf /etc/supervisord.conf
 
-## Got to fix permissions on Wordpress /html directory & restart Apache2
+## Open permissions on Wordpress /html directory & let supervisord restart Apache2
 RUN chown -R www-data:www-data /var/www/html        && \
-find /var/www/html -type d -exec chmod 755 {} \;    && \
-find /var/www/html -type f -exec chmod 644 {} \;    
+find /var/www/html -type d -exec chmod 777 {} \;    && \
+find /var/www/html -type f -exec chmod 777 {} \;    
  
 ## ENTRYPOINT ["docker-entrypoint.sh"]
 EXPOSE 22 80 443 3306

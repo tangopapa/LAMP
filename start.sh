@@ -8,20 +8,28 @@ yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
 try() { "$@" || die "cannot $*"; }
 
-make_cert () {
-openssl req \
-    -new \
-    -newkey rsa:4096 \
-    -days 365 \
-    -nodes \
-    -x509 \
-    -subj "/C=US/ST=VA/L=Upperville/O=dtool/CN=www.$SITE.com" \
-    -keyout www.$SITE.com.key \
-    -out www.$SITE.com.cert
-}
+## Let's replace current version of openssl w/ heartbleed vulnerable version: openssl-1.0.1a
+## It will end up in /usr/local/ssl/bin/
+mkdir -p /opt
+cd /opt
+wget https://www.openssl.org/source/old/1.0.1/openssl-1.0.1d.tar.gz
+tar -xvzf openssl-1.0.1a.tar.gz
+cd openssl-1.0.1a
+./config --prefix=/usr
+make 
+make install
 
-## Make sure we have latest openssl - no heartbleed please
-apt-get upgrade openssl
+make_cert () {
+/usr/local/ssl/bin/openssl req \
+                          -new \
+                          -newkey rsa:4096 \
+                          -days 365 \
+                          -nodes \
+                          -x509 \
+                          -subj "/C=US/ST=VA/L=Upperville/O=dtool/CN=www.$SITE.com" \
+                          -keyout www.$SITE.com.key \
+                          -out www.$SITE.com.cert
+}
 
 ## Enable SSL module
 a2enmod ssl
