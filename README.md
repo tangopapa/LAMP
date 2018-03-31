@@ -23,7 +23,7 @@ sitting in plain text in the script.
 These files are useful as part of a process for testing Jenkins pipeline builds
 
 # DOCKER-LAMP:
-docker run -dit -p 22:22 -p 80:80 -p 443:443 -p 3306:3306 lamp /bin/bash
+docker run -dit -p 22:22 -p 80:80 -p 443:443 -p 3306:3306 lamp
 
 This creates a target container that contains common applications,
 configured & listening on open ports 22, 80, 443, & 3306.
