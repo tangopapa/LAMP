@@ -8,7 +8,7 @@ LABEL maintainer="tom@frogtownroad.com"
 RUN apt-get update  -y
 
 ## Install supplementary packages --no-install-recommends
-RUN apt-get install wget supervisor openssh-server --no-install-recommends -y  
+RUN apt-get install wget supervisor openssh-server ca-certificates --no-install-recommends -y  
 
 ## Install Apache
 RUN apt-get install apache2 libapache2-mod-php7.0  --no-install-recommends -y
