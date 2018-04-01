@@ -63,6 +63,6 @@ find /var/www/html -type d -exec chmod 777 {} \;    && \
 find /var/www/html -type f -exec chmod 777 {} \;    
  
 ## ENTRYPOINT ["docker-entrypoint.sh"]
-EXPOSE 22 80 443 3306
+EXPOSE 22:8022 80:8080 443:8443 3306:8306
 
-CMD ["c"]
+CMD ["exec /usr/bin/supervisord -n"]

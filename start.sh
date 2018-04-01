@@ -9,22 +9,6 @@ yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
 try() { "$@" || die "cannot $*"; }
 
-## Let's replace current version of openssl w/ heartbleed vulnerable version: openssl-1.0.1d
-## It ends up in /usr/local/ssl/bin/
-mkdir -p /opt
-cd /opt
-wget https://www.openssl.org/source/old/1.0.1/$OPENSSL.tar.gz
-
-if [ ! -f /opt/$OPENSSL.tar.gz ]; then
-    wget https://www.openssl.org/source/old/1.0.1/$OPENSSL.tar.gz
-fi
-
-tar -xvzf $OPENSSL.tar.gz
-cd $OPENSSL
-./config --prefix=/usr
-make 
-make install
-
 make_cert () {
 /usr/local/ssl/bin/openssl req \
 -new \
@@ -88,8 +72,8 @@ ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/d
 mkdir -p /var/log/supervisor
 touch /var/log/supervisor/supervisord.log
 
-#exec /usr/bin/supervisord -n                                        ##-c /etc/supervisor/conf.d/supervisord.conf
-#echo "starting supervisor..."
+##exec /usr/bin/supervisord -n                                        ##-c /etc/supervisor/conf.d/supervisord.conf
+##echo "starting supervisor..."
 
 ## while true; do sleep 1; done
-#exec "$@"
+##exec "$@"
