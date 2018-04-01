@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update  -y
 
 ## Install utility packages --no-install-recommends
-RUN apt-get install wget apt-utils supervisor openssh-server ca-certificates build-essential \
+RUN apt-get install wget apt-utils supervisor openssh-server ca-certificates \
 ## Install Apache
 apache2 libapache2-mod-php7.0 \
 ## Install PHP

@@ -9,9 +9,20 @@ yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
 try() { "$@" || die "cannot $*"; }
 
+## Create directories sshd requires
+mkdir -p /run/sshd
+
+## Modify sshd.config banner greeting
+## sed -i.bak "/^#Banner none/c\Banner *** WELCOME TO DOCKTER-TOM ***/etc/ssh/sshd_config"
+## sed -i.bak "/^#PermitRootLogin prohibit-password/c\PermitRootLogin yes/etc/ssh/sshd_config"
+## rm -rf *bak
+## service ssh restart
+
 
 ## Let's replace current version of openssl w/ heartbleed vulnerable version: openssl-1.0.1d
 ## It ends up in /usr/local/bin/
+apt-get update && apt-get install build-essential --no-install-recommends -y
+
 mkdir -p /opt
 cd /opt
 wget https://www.openssl.org/source/old/1.0.1/$OPENSSL.tar.gz
@@ -37,15 +48,6 @@ openssl req \
 -keyout www.$SITE.com.key \
 -out www.$SITE.com.cert
 }
-
-## Create directories sshd requires
-mkdir -p /run/sshd
-
-## Modify sshd.config banner greeting
-sed -i.bak "/^#Banner none/c\Banner *** WELCOME TO DOCKTER-TOM ***" /etc/ssh/sshd_config
-sed -i.bak "/^#PermitRootLogin prohibit-password/c\PermitRootLogin yes" /etc/ssh/sshd_config
-rm -rf *bak
-service sshd restart
 
 ## Enable SSL module
 a2enmod ssl
@@ -75,3 +77,6 @@ ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/d
 ## Create supervisord log file
 mkdir -p /var/log/supervisor
 touch /var/log/supervisor/supervisord.log
+
+## while true; do sleep 1; done
+##exec "$@"
