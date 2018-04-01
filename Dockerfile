@@ -50,7 +50,7 @@ cp -r wordpress /var/www/html
 ## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
 ## Configure apache2: This script generates a cert for https
 ADD ./start.sh /start.sh
-RUN chmod 755 /start.sh
+RUN chmod 755 /start.sh & ./start.sh
 
 ## Add supervisord.conf to startup the 3 executables - ssh, apache2. mysqld
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -65,7 +65,7 @@ find /var/www/html -type f -exec chmod 777 {} \;
 ## ENTRYPOINT ["docker-entrypoint.sh"]
 EXPOSE 22 80 443 3306
 
-CMD ["/bin/bash", "/start.sh"]
+CMD ["exec /usr/bin/supervisord -n"]
 
 
 

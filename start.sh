@@ -88,8 +88,6 @@ ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/d
 mkdir -p /var/log/supervisor
 touch /var/log/supervisor/supervisord.log
 
-exec /usr/bin/supervisord -n                                        ##-c /etc/supervisor/conf.d/supervisord.conf
-echo "starting supervisor..."
-
+## exec /usr/bin/supervisord -n                                        ##-c /etc/supervisor/conf.d/supervisord.conf
 ## while true; do sleep 1; done
-exec "$@"
+## exec "$@"
