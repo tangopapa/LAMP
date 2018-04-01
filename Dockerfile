@@ -39,18 +39,17 @@ RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done       
     mysql -uroot -e "FLUSH PRIVILEGES;"                                                 
 
 
+## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
+## Configure apache2: This script generates a cert for https
+ADD ./start.sh /start.sh
+RUN chmod 755 /start.sh && ./start.sh
+
 ## Install Wordpress - this times out sometimes. Just restart. Script is idempotent
 RUN wget https://wordpress.org/latest.tar.gz    && \
 tar xpf latest.tar.gz                           && \
 rm -rf latest.tar.gz                            && \
 rm -rf /var/www/html                            && \
 cp -r wordpress /var/www/html                   
-
-
-## Moved to here in Dockerfile so that MariaDB & WP would not have to keep being rebuilt
-## Configure apache2: This script generates a cert for https
-ADD ./start.sh /start.sh
-RUN chmod 755 /start.sh && ./start.sh
 
 ## Add supervisord.conf to startup the 3 executables - ssh, apache2. mysqld
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf

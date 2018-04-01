@@ -9,6 +9,9 @@ yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
 try() { "$@" || die "cannot $*"; }
 
+## Create directories sshd requires
+mkdir -p /run/sshd
+
 make_cert () {
  openssl req \
 -new \
@@ -35,6 +38,14 @@ fi
 ## Apache has an SSL template; let's use that
 a2ensite default-ssl
 
+## Modify default-ssl.conf
+sed -i.bak "/^\s*ServerAdmin\s*webmaster@localhost/a\ServerName ${SITE}.com:443" /etc/apache2/sites-enabled/default-ssl.conf
+sed -i.bak "/^\s*SSLCertificateFile/c\SSLCertificateFile /etc/apache2/ssl/www.$SITE.com.cert"  /etc/apache2/sites-enabled/default-ssl.conf
+sed -i.bak "/^\s*SSLCertificateKeyFile/c\SSLCertificateKeyFile /etc/apache2/ssl/www.$SITE.com.key"  /etc/apache2/sites-enabled/default-ssl.conf
+rm -rf /etc/apache2/sites-enabled/*bak
+echo /etc/apache2/sites-enabled/default-ssl.conf
+
+
 ## Restart Apache to effect these changes
 ## Check to see if apache2 has started; if not, start it
 if [[ -z $(pgrep apache2) ]]; then 
@@ -49,16 +60,6 @@ cd /etc/apache2/ssl
 make_cert
 chmod 600 /etc/apache2/ssl/*
 
-## Create directories sshd requires
-mkdir -p /run/sshd
-
-## Modify default-ssl.conf
-sed -i.bak "/^\s*ServerAdmin\s*webmaster@localhost/a\ServerName ${SITE}.com:443" /etc/apache2/sites-enabled/default-ssl.conf
-sed -i.bak "/^\s*SSLCertificateFile/c\SSLCertificateFile /etc/apache2/ssl/www.$SITE.com.cert"  /etc/apache2/sites-enabled/default-ssl.conf
-sed -i.bak "/^\s*SSLCertificateKeyFile/c\SSLCertificateKeyFile /etc/apache2/ssl/www.$SITE.com.key"  /etc/apache2/sites-enabled/default-ssl.conf
-rm -rf /etc/apache2/sites-enabled/*bak
-
-echo /etc/apache2/sites-enabled/default-ssl.conf
 
 ## Error checking
 cd /
