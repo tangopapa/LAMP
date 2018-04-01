@@ -11,7 +11,7 @@ RUN apt-get update  -y
 RUN apt-get install wget supervisor openssh-server ca-certificates gcc binutils make  -y  
 
 ## Install Apache
-RUN apt-get install apache2 libapache2-mod-php7.0  --no-install-recommends -y
+RUN apt-get install apache2 libapache2-mod-php7.0  -y
 
 ## Install PHP
 RUN apt-get install php7.0 php7.0-mysql   --no-install-recommends -y
@@ -31,7 +31,7 @@ apt-get install mariadb-client mariadb-server  --no-install-recommends -y
 RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done               && \
     mysql -uroot -e "DROP USER IF EXISTS wp_user;"                                      && \
 ## Let's add a root user with no password
-    mysql -uroot -e "CREATE USER 'root' IDENTIFIED BY '';"                              && \
+##    mysql -uroot -e "CREATE USER 'root' IDENTIFIED BY '';"                              && \
     mysql -uroot -e "CREATE USER 'wp_user' IDENTIFIED BY 'wp_password';"                && \
     mysql -uroot -e "DROP DATABASE IF EXISTS wp_database;"                              && \
     mysql -uroot -e "CREATE DATABASE wp_database;"                                      && \
@@ -65,7 +65,6 @@ find /var/www/html -type f -exec chmod 777 {} \;
 EXPOSE 22 80 443 3306
 
 CMD ["exec /usr/bin/supervisord -n"]
-
 
 
 
