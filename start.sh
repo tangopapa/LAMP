@@ -25,8 +25,9 @@ cd $OPENSSL
 make 
 make install_sw
 
+## Make cert w/ heartbleed openssl
 make_cert () {
-/usr/local/ssl/bin/openssl req \
+openssl req \
                           -new \
                           -newkey rsa:4096 \
                           -days 365 \
