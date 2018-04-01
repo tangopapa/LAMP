@@ -23,7 +23,7 @@ tar -xvzf $OPENSSL.tar.gz
 cd $OPENSSL
 ./config --prefix=/usr
 make 
-make install
+make install_sw
 
 make_cert () {
 /usr/local/ssl/bin/openssl req \
