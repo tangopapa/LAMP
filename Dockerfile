@@ -8,14 +8,13 @@ LABEL maintainer="tom@frogtownroad.com"
 RUN apt-get update  -y
 
 ## Install supplementary packages --no-install-recommends
-RUN apt-get install wget supervisor openssh-server -y  && \
-mkdir -p /var/log/supervisor
+RUN apt-get install wget supervisor openssh-server --no-install-recommends -y  
 
 ## Install Apache
-RUN apt-get install apache2 libapache2-mod-php7.0 -y
+RUN apt-get install apache2 libapache2-mod-php7.0  --no-install-recommends -y
 
 ## Install PHP
-RUN apt-get install php7.0 php7.0-mysql  -y
+RUN apt-get install php7.0 php7.0-mysql   --no-install-recommends -y
 
 ## Install wget - moved to PHP
 
@@ -26,7 +25,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN export DEBIAN_FRONTEND="noninteractive"                                                                  && \
 echo mariadb-server-10.0 mariadb-server/root_password password tmpsetup | debconf-set-selections             && \
 echo mariadb-server-10.0 mariadb-server/root_password_again password tmpsetup | debconf-set-selections       && \
-apt-get install mariadb-client mariadb-server -y
+apt-get install mariadb-client mariadb-server  --no-install-recommends -y
 
 
 RUN mysqld_safe & until mysqladmin ping >/dev/null 2>&1; do sleep 1; done               && \
@@ -53,7 +52,7 @@ cp -r wordpress /var/www/html
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
 
-## Add supervisord to properly startup the 3 executables - ssh, apache2. mysqld
+## Add supervisord.conf to startup the 3 executables - ssh, apache2. mysqld
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./supervisord.conf /etc/supervisor/supervisord.conf
 COPY ./supervisord.conf /etc/supervisord.conf

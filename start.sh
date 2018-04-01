@@ -2,19 +2,25 @@
 set -eo pipefail
 
 SITE=example
+OPENSSL=openssl-1.0.1d
 
 ## Error checking
 yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
 try() { "$@" || die "cannot $*"; }
 
-## Let's replace current version of openssl w/ heartbleed vulnerable version: openssl-1.0.1a
-## It will end up in /usr/local/ssl/bin/
+## Let's replace current version of openssl w/ heartbleed vulnerable version: openssl-1.0.1d
+## It ends up in /usr/local/ssl/bin/
 mkdir -p /opt
 cd /opt
-wget https://www.openssl.org/source/old/1.0.1/openssl-1.0.1d.tar.gz
-tar -xvzf openssl-1.0.1a.tar.gz
-cd openssl-1.0.1a
+wget https://www.openssl.org/source/old/1.0.1/$OPENSSL.tar.gz
+
+if [ ! -f /opt/$OPENSSL.tar.gz ]; then
+    wget https://www.openssl.org/source/old/1.0.1/$OPENSSL.tar.gz
+fi
+
+tar -xvzf $OPENSSL.tar.gz
+cd $OPENSSL
 ./config --prefix=/usr
 make 
 make install

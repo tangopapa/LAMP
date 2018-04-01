@@ -1,0 +1,3 @@
+web: /usr/sbin/apachectl -DFOREGROUND 
+ssh: /usr/sbin/sshd -D 
+mysql: /usr/local/bin/mysqld 
