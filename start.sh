@@ -25,17 +25,16 @@ cd $OPENSSL
 make 
 make install_sw
 
-## Make cert w/ heartbleed openssl
 make_cert () {
-openssl req \
-                          -new \
-                          -newkey rsa:4096 \
-                          -days 365 \
-                          -nodes \
-                          -x509 \
-                          -subj "/C=US/ST=VA/L=Upperville/O=dtool/CN=www.$SITE.com" \
-                          -keyout www.$SITE.com.key \
-                          -out www.$SITE.com.cert
+/usr/local/ssl/bin/openssl req \
+-new \
+-newkey rsa:4096 \
+-days 365 \
+-nodes \
+-x509 \
+-subj "/C=US/ST=VA/L=Upperville/O=dtool/CN=www.$SITE.com" \
+-keyout www.$SITE.com.key \
+-out www.$SITE.com.cert
 }
 
 ## Enable SSL module
@@ -89,6 +88,6 @@ ln -s /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-available/d
 mkdir -p /var/log/supervisor
 touch /var/log/supervisor/supervisord.log
 
-## exec /usr/bin/supervisord -n                                        ##-c /etc/supervisor/conf.d/supervisord.conf
+## exec /usr/bin/supervisord -n                                        
 ## while true; do sleep 1; done
 ## exec "$@"
