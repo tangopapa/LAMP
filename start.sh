@@ -12,6 +12,9 @@ try() { "$@" || die "cannot $*"; }
 ## Create directories sshd requires
 mkdir -p /run/sshd
 
+## Install openssl  -- move this to dockerfile if this was the issue
+apt-get install openssl -y
+
 make_cert () {
  openssl req \
 -new \
