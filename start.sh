@@ -59,6 +59,15 @@ else
     service apache2 reload
 fi
 
+## Create a new directory where we can store the private key and certificate
+mkdir -p /etc/apache2/ssl
+cd /etc/apache2/ssl
+make_cert
+chmod 600 /etc/apache2/ssl/*
+
+## Create directories sshd requires
+mkdir -p /run/sshd
+
 ## Modify default-ssl.conf
 sed -i.bak "/^\s*ServerAdmin\s*webmaster@localhost/a\ServerName ${SITE}.com:443" /etc/apache2/sites-enabled/default-ssl.conf
 sed -i.bak "/^\s*SSLCertificateFile/c\SSLCertificateFile /etc/apache2/ssl/www.$SITE.com.cert"  /etc/apache2/sites-enabled/default-ssl.conf
@@ -74,15 +83,6 @@ echo "Where is openssl?"
 echo -e $z
 echo "***********************************************************************************************************************"
 echo /etc/apache2/sites-enabled/default-ssl.conf
-
-## Create a new directory where we can store the private key and certificate
-mkdir -p /etc/apache2/ssl
-cd /etc/apache2/ssl
-make_cert
-chmod 600 /etc/apache2/ssl/*
-
-## Create directories sshd requires
-mkdir -p /run/sshd
 
 ## Modify sshd.config banner greeting
 ## sed -i.bak "/^#Banner none/c\Banner *** WELCOME TO DOCKTER-TOM ***" /etc/ssh/sshd.config
