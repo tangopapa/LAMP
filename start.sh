@@ -59,6 +59,12 @@ else
     service apache2 reload
 fi
 
+## Modify default-ssl.conf
+sed -i.bak "/^\s*ServerAdmin\s*webmaster@localhost/a\ServerName ${SITE}.com:443" /etc/apache2/sites-enabled/default-ssl.conf
+sed -i.bak "/^\s*SSLCertificateFile/c\SSLCertificateFile /etc/apache2/ssl/www.$SITE.com.cert"  /etc/apache2/sites-enabled/default-ssl.conf
+sed -i.bak "/^\s*SSLCertificateKeyFile/c\SSLCertificateKeyFile /etc/apache2/ssl/www.$SITE.com.key"  /etc/apache2/sites-enabled/default-ssl.conf
+rm -rf /etc/apache2/sites-enabled/*bak
+
 ## Create a new directory where we can store the private key and certificate
 mkdir -p /etc/apache2/ssl
 cd /etc/apache2/ssl
@@ -71,12 +77,6 @@ mkdir -p /run/sshd
 ## Modify sshd.config banner greeting
 ## sed -i.bak "/^#Banner none/c\Banner *** WELCOME TO DOCKTER-TOM ***" /etc/ssh/sshd.config
 ## rm -rf *bak
-
-## Modify default-ssl.conf
-sed -i.bak "/^\s*ServerAdmin\s*webmaster@localhost/a\ServerName ${SITE}.com:443" /etc/apache2/sites-enabled/default-ssl.conf
-sed -i.bak "/^\s*SSLCertificateFile/c\SSLCertificateFile /etc/apache2/ssl/www.$SITE.com.cert"  /etc/apache2/sites-enabled/default-ssl.conf
-sed -i.bak "/^\s*SSLCertificateKeyFile/c\SSLCertificateKeyFile /etc/apache2/ssl/www.$SITE.com.key"  /etc/apache2/sites-enabled/default-ssl.conf
-rm -rf /etc/apache2/sites-enabled/*bak
 
 ## This is a soft link
 if [ -e /etc/apache2/sites-available/default-ssl.conf ]; then
