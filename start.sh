@@ -65,9 +65,14 @@ sed -i.bak "/^\s*SSLCertificateFile/c\SSLCertificateFile /etc/apache2/ssl/www.$S
 sed -i.bak "/^\s*SSLCertificateKeyFile/c\SSLCertificateKeyFile /etc/apache2/ssl/www.$SITE.com.key"  /etc/apache2/sites-enabled/default-ssl.conf
 rm -rf /etc/apache2/sites-enabled/*bak
 
+echo /etc/apache2/sites-enabled/default-ssl.conf
+
 ## Error checking
 cd /
-echo $(find . -print | grep  "bin/openssl")
+z=$(find . -print | grep  'bin/openssl')
+echo "Where is openssl?"
+echo z
+echo /etc/apache2/sites-enabled/default-ssl.conf
 
 ## Create a new directory where we can store the private key and certificate
 mkdir -p /etc/apache2/ssl
