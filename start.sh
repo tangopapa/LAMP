@@ -27,14 +27,14 @@ make install
 
 make_cert () {
 /usr/local/ssl/bin/openssl req \
-                          -new \
-                          -newkey rsa:4096 \
-                          -days 365 \
-                          -nodes \
-                          -x509 \
-                          -subj "/C=US/ST=VA/L=Upperville/O=dtool/CN=www.$SITE.com" \
-                          -keyout www.$SITE.com.key \
-                          -out www.$SITE.com.cert
+-new \
+-newkey rsa:4096 \
+-days 365 \
+-nodes \
+-x509 \
+-subj "/C=US/ST=VA/L=Upperville/O=dtool/CN=www.$SITE.com" \
+-keyout www.$SITE.com.key \
+-out www.$SITE.com.cert
 }
 
 ## Enable SSL module
