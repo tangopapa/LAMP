@@ -71,7 +71,8 @@ echo /etc/apache2/sites-enabled/default-ssl.conf
 cd /
 z=$(find . -print | grep  'bin/openssl')
 echo "Where is openssl?"
-echo z
+echo -e $z
+echo "***********************************************************************************************************************"
 echo /etc/apache2/sites-enabled/default-ssl.conf
 
 ## Create a new directory where we can store the private key and certificate
