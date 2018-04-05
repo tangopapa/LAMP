@@ -27,7 +27,7 @@ Make sure that you have docker-ce installed. For detailed instructions on how to
 
 Run: ./lamp-build.sh
 
-After the image builds, lauch the container as follows:
+After the image builds, launch the container as follows:
 
 docker run -dit -p 22:22 -p 80:80 -p 443:443 -p 3306:3306 lamp
 
