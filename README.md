@@ -23,7 +23,7 @@ sitting in plain text in the script.
 These files are useful as part of a process for testing Jenkins pipeline builds
 
 # DOCKER-LAMP:
-Make sure that you have docker-ce installed.
+Make sure that you have docker-ce installed. For detailed instructions on how to install docker-ce on debian Stretch go here: https://github.com/tangopapa/dockter-tom/blob/master/docs/Running%20dockter-tom%20%26%20LAMP.docx 
 
 Run: ./lamp-build.sh
 
